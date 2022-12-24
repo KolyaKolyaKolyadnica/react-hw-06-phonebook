@@ -1,0 +1,15 @@
+.container {
+}
+.counter {
+  padding: 0 5px;
+}
+.value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
