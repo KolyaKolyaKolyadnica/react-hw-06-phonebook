@@ -63,18 +63,13 @@ class ContactForm extends Component {
     );
   }
 }
-const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => {
-  // console.log('text ', text);
-
-  return {
-    onSubmit: text => dispatch(phonebookActions.addNewContact(text)),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onSubmit: text => dispatch(phonebookActions.addNewContact(text)),
+});
 
 export default connect(null, mapDispatchToProps)(ContactForm);
 
-// ContactForm.propTypes = {
-//   onSubmit: PropTypes.func,
-// };
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func,
+};

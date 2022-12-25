@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
 import { connect } from 'react-redux';
 
 import ContactForm from './ContactForm';
@@ -19,71 +18,11 @@ class App extends Component {
     filter: '',
   };
 
-  // addNewContact = ({ name, number }) => {
-  //   if (name.length === 0) {
-  //     return;
-  //   }
-
-  //   if (this.state.contacts.some(contact => contact.name === name)) {
-  //     return alert('This contact already exists');
-  //   }
-
-  //   const newContact = {
-  //     id: nanoid(),
-  //     name,
-  //     number,
-  //   };
-
-  //   this.setState(prevState => ({
-  //     contacts: [newContact, ...prevState.contacts],
-  //     name: '',
-  //     number: '',
-  //   }));
-  // };
-
   filterByName = e => {
     this.setState({ filter: e.currentTarget.value });
   };
 
-  // deleteContact = e => {
-  //   const deletedContactId = e.currentTarget.value;
-
-  //   this.setState(prevState => ({
-  //     contacts: prevState.contacts.filter(
-  //       contact => contact.id !== deletedContactId
-  //     ),
-  //   }));
-  // };
-
-  componentDidMount() {
-    try {
-      const parsedLocalStorageContacts = JSON.parse(
-        localStorage.getItem('contacts')
-      );
-      if (parsedLocalStorageContacts) {
-        this.setState({ contacts: parsedLocalStorageContacts });
-      }
-    } catch (error) {
-      console.error('Error ', error);
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    try {
-      if (this.state.contacts !== prevState.contacts) {
-        localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-      }
-    } catch (error) {
-      console.error('Error ', error);
-    }
-  }
-
   render() {
-    const { filter } = this.state;
-    const normalizedFilter = this.state.filter.toLocaleLowerCase();
-    const visibleContacts = this.state.contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(normalizedFilter)
-    );
-
     return (
       <>
         <div className={style.container}>
@@ -91,22 +30,14 @@ class App extends Component {
             <h1>Phonebook</h1>
 
             <ContactForm />
-            {/* <ContactForm onSubmit={this.addNewContact} /> */}
 
-            <Filter filterValue={filter} onChangeFilter={this.filterByName} />
-            {/* <Filter filterValue={filter} onChangeFilter={this.filterByName} /> */}
+            <Filter />
           </div>
 
           <div className={style.contacts}>
             <h2>Contacts</h2>
 
             <ContactList />
-
-            {/* <ContactList
-              contacts={visibleContacts}
-              filterValue={filter}
-              onDeleteContact={this.deleteContact}
-            /> */}
           </div>
         </div>
         <Counter />
@@ -115,14 +46,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  // console.log('state ', state);
-  return {
-    contacts: state.phonebook.contacts,
-    filter: state.phonebook.filter,
-  };
-};
+const mapStateToProps = state => ({
+  contacts: state.phonebook.contacts,
+  filter: state.phonebook.filter,
+});
 
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);

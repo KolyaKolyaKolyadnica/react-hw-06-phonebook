@@ -9,25 +9,21 @@ const defaultContacts = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
-const contacts = createReducer(defaultContacts, {
-  [phonebookActions.addNewContact]: (state, { payload }) => [...state, payload],
-  [phonebookActions.deleteContact]: (state, { payload }) =>
-    state.filter(contact => contact.id !== payload),
+const contacts = createReducer(defaultContacts, builder => {
+  builder
+    .addCase(phonebookActions.addNewContact, (state, { payload }) => [
+      ...state,
+      payload,
+    ])
+    .addCase(phonebookActions.deleteContact, (state, { payload }) =>
+      state.filter(contact => contact.id !== payload)
+    );
 });
 
-const filter = createReducer('', {
-  [phonebookActions.filterByName]: (state, { payload }) => payload,
+const filter = createReducer('', builder => {
+  builder.addCase(phonebookActions.filterByName, (_, { payload }) => payload);
 });
 
 const phonebookReducer = combineReducers({ contacts, filter });
 
 export default phonebookReducer;
-
-// const name = (state = [], actions) => state;
-
-// const number = (state = [], actions) => state;
-
-// export default counterReducer({
-//   name,
-//   number,
-// });

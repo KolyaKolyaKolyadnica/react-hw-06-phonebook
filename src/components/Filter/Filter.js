@@ -21,21 +21,12 @@ function Filter({ filterValue, onChangeFilter }) {
     </div>
   );
 }
-const mapStateToProps = state => {
-  // console.log('state = ', state);
-  console.log('state.phonebook.filter = ', state.phonebook.filter);
-  return { filterValue: state.phonebook.filter };
-};
+const mapStateToProps = state => ({ filterValue: state.phonebook.filter });
 
 const mapDispatchToProps = dispatch => ({
   onChangeFilter: e =>
     dispatch(phonebookActions.filterByName(e.currentTarget.value)),
 });
-
-// const mapDispatchToProps = dispatch => ({
-//   onDeleteContact: e =>
-//     dispatch(phonebookActions.deleteContact(e.currentTarget.value)),
-// });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
 
